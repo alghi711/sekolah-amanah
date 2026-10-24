@@ -271,10 +271,10 @@ const bannerNodes={};
   assert.equal(chase.sample('Steve',9.5,-20,20).mode,'wave');
   assert.equal(chase.sample('Steve',9.5,-20,20).x,chase.sample('Steve',10.5,-20,20).x,'Steve stands still while waving');
   assert.equal(chase.sample('Steve',11.3,-20,20).mode,'run');assert.equal(chase.sample('Steve',12,-20,20).visible,false);
-  assert.equal(JSON.stringify(chase.sample('Steve',5,-20,20)),JSON.stringify(chase.sample('Steve',19,-20,20)),'Portal story loops exactly');
+  assert.equal(JSON.stringify(chase.sample('Steve',5,-20,20)),JSON.stringify(chase.sample('Steve',5+chase.duration,-20,20)),'Portal story loops exactly');
   const story=chase.createChase(THREE,scenes.map(scene=>scene.clone(true)));
   assert.equal(story.portals.length,2);
-  for(const width of [14,24,35])for(let time=0;time<14;time+=.1){
+  for(const width of [14,24,35])for(let time=0;time<chase.duration;time+=.1){
     story.pose(time,width);
     for(const actor of story.actors){assert(Number.isFinite(actor.character.position.x));assert(Math.abs(actor.character.position.x)<width);}
     const [steve,alex]=story.actors.map(actor=>actor.character);
@@ -284,12 +284,15 @@ const bannerNodes={};
   vm.runInNewContext(chaseSource,{window:{...win,AmanahGreeters:modelContext.window.AmanahGreeters},document:{...doc,querySelector:()=>chaseHost},ResizeObserver:class{observe(){}},requestAnimationFrame:callback=>{const id=++nextFrame;frames.set(id,callback);return id;},cancelAnimationFrame:id=>frames.delete(id)});
   await new Promise(resolve=>setImmediate(resolve));assert(chaseFallback.hidden);assert.equal(frames.size,0);
   visibility([{isIntersecting:true}]);assert.equal(frames.size,1);
+  const runningSteve=renderedScene.getObjectByName('Steve'),runningAlex=renderedScene.getObjectByName('Alex');
+  assert(runningSteve.visible&&runningAlex.visible,'Both characters are already visible when the visitor scrolls to the scene');
+  const arrivalX=runningSteve.position.x;tick(40);tick(80);assert(runningSteve.position.x>arrivalX);
   events.emit('amanah:motion',{detail:{paused:true}});assert.equal(frames.size,0);
   events.emit('amanah:motion',{detail:{paused:false}});assert.equal(frames.size,1);
   preference.matches=true;preferenceEvents.emit('change');assert.equal(frames.size,0,'Reduced motion freezes the portal scene');
   preference.matches=false;preferenceEvents.emit('change');assert.equal(frames.size,1);
   visibility([{isIntersecting:false}]);assert.equal(frames.size,0);
-  visibility([{isIntersecting:true}]);chaseHost.children[1].emit('webglcontextlost',{preventDefault(){}});assert.equal(chaseFallback.hidden,false);assert.equal(frames.size,0);
+  visibility([{isIntersecting:true}]);assert.equal(runningSteve.position.x,arrivalX,'Returning visitors immediately see the running phase again');chaseHost.children[1].emit('webglcontextlost',{preventDefault(){}});assert.equal(chaseFallback.hidden,false);assert.equal(frames.size,0);
   console.log('PASS: portal entry, running order and separation, Steve stopping and waving, return portal, exact loop, pause, visibility and fallback.');
   assert(html.includes('id="banner-greeters"'));assert(read('prepare-deploy.cjs').includes("'banner-greeters.js'"));
   console.log('PASS: original Steve and Alex GLBs, embedded skins, real loader compatibility, waving, loading-time pause, reduced motion, visibility and fallback.');

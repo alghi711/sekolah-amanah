@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const duration = 14;
+  const duration = 12;
   const mix = (a, b, value) => a + (b - a) * value;
   function sample(name, time, left, right) {
     const t = ((time % duration) + duration) % duration;
@@ -85,7 +85,7 @@
   if(!host||!window.THREE?.GLTFLoader||!window.AmanahGreeters)return;
   const T=window.THREE,fallback=host.querySelector('img');
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-  let paused=false,visible=false,available=true,frame=0,previous=0,elapsed=0,halfWidth=24,renderer;
+  let paused=false,visible=false,available=true,frame=0,previous=0,elapsed=3,halfWidth=24,renderer;
   try{paused=window.localStorage.getItem('amanah-motion-paused')==='true';}catch{}
   let refresh=()=>{};
   document.addEventListener('amanah:motion',event=>{paused=event.detail.paused;refresh();});
@@ -106,7 +106,7 @@
       function animate(now){frame=requestAnimationFrame(animate);if(now-previous<40)return;if(previous)elapsed+=Math.min((now-previous)/1000,.08);previous=now;render();}
       function sync(){stop();if(reduced.matches)render();if(available&&visible&&!paused&&!reduced.matches&&!document.hidden)frame=requestAnimationFrame(animate);}
       refresh=sync;reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);
-      if('IntersectionObserver'in window)new window.IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();}).observe(host);else{visible=true;sync();}
+      if('IntersectionObserver'in window)new window.IntersectionObserver(entries=>{const entering=entries[0].isIntersecting;if(entering&&!visible){elapsed=3;render();}visible=entering;sync();}).observe(host);else{visible=true;sync();}
       window.addEventListener('pagehide',stop);window.addEventListener('pageshow',sync);
       renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();available=false;stop();renderer.domElement.hidden=true;fallback.hidden=false;});
     }catch{available=false;if(renderer){renderer.domElement.remove();renderer.dispose();}fallback.hidden=false;}
