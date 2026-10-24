@@ -109,8 +109,6 @@ for(const [x,w] of [[.3,6.8],[9.7,5.6]])block(x,13.61,.4,w,.08,.12,'#e8e8c8','#e
 block(7.7,14.05,-.3,1.25,.55,.35,'#dfd8b9','#beb594','#a39c7b');
 block(7.7,14.6,-.6,1.25,.5,.35,'#dfd8b9','#beb594','#a39c7b');
 pieces.push('</g>');
-// Floating pixel sparks keep the composition light.
-for(const [x,y,s] of [[128,365,8],[783,477,7],[270,626,6],[694,161,5]])pieces.push(`<path d="M${x} ${y-s}h${s}v${s}h${s}v${s}h-${s}v${s}h-${s}v-${s}h-${s}v-${s}h${s}z" fill="#92b76b"/>`);
 pieces.push('</svg>');
 fs.writeFileSync(path.join(__dirname,'assets/campus.svg'),pieces.join('\n'));
 console.log('Created original isometric campus SVG.');

@@ -4,6 +4,8 @@ Konsep: dunia sekolah yang hangat, kreatif, dan penuh peluang. Sebuah sekolah mi
 
 ## Arah visual
 
+- Ornamen bintang dan kilau dekoratif tidak digunakan pada label, caption, maupun ilustrasi.
+
 - Ilustrasi sekolah buatan khusus: bangunan bertingkat, pepohonan blok, siswa, lapangan, dan bendera Indonesia. Ini ilustrasi imajinatif, bukan denah atau representasi fasilitas yang dijanjikan.
 - Revisi mengikuti referensi HTML pengguna: garis 2px, bayangan kotak tegas, grid pixel, kartu berbingkai, label pixel, dan hijau–lime.
 - Sekolah menggunakan Three.js r128 yang disimpan lokal, dengan kamera ortografis, geometri voxel, dan bayangan. Ilustrasi berputar otomatis. Sentuhan dan geser tidak mengubah arah atau menghentikan putaran; area ilustrasi tidak mengambil fokus keyboard. Tombol putar, Auto, reset, dan pencahayaan pagi/senja tetap tersedia. Model menggunakan 209 mesh dan berhenti merender ketika keluar layar atau tab tersembunyi.

@@ -382,16 +382,13 @@ footer.wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .motion-ready .ribbon-icon svg{animation:amanah-small-drift 8s ease-in-out infinite;animation-play-state:paused}
 .motion-ready .ribbon-value:nth-child(2) svg{animation-delay:-2.6s}
 .motion-ready .ribbon-value:nth-child(3) svg{animation-delay:-5.2s}
-.motion-ready .hero-badge>span{display:inline-block;animation:amanah-spark 10s ease-in-out infinite;animation-play-state:paused}
-.motion-ready .learning-spark{animation:amanah-spark 14s ease-in-out infinite;animation-play-state:paused}
 .motion-ready .campus-sky{animation:amanah-ambient 12s ease-in-out infinite;animation-play-state:paused}
-.motion-running .motion-inview .service-art svg,.motion-running .motion-inview .learning-art img,.motion-running .motion-inview .cup-visual img,.motion-running .motion-inview .ribbon-icon svg,.motion-running .motion-inview .hero-badge>span,.motion-running .motion-inview .learning-spark,.motion-running .motion-inview .campus-sky{animation-play-state:running}
+.motion-running .motion-inview .service-art svg,.motion-running .motion-inview .learning-art img,.motion-running .motion-inview .cup-visual img,.motion-running .motion-inview .ribbon-icon svg,.motion-running .motion-inview .campus-sky{animation-play-state:running}
 .motion-running .is-entering{animation:amanah-enter .6s cubic-bezier(.2,.7,.3,1) both;animation-delay:var(--enter-delay,0ms)}
 .is-entering:focus-within{animation:none!important}
 .motion-ready:not(.motion-running) .banner-track{transition:none}
 @keyframes amanah-drift{0%,100%{translate:0 0}50%{translate:0 -5px}}
 @keyframes amanah-small-drift{0%,100%{translate:0 0}50%{translate:0 -2px}}
-@keyframes amanah-spark{0%,70%,100%{rotate:0deg}85%{rotate:45deg}}
 @keyframes amanah-ambient{0%,100%{opacity:.65}50%{opacity:1}}
 @keyframes amanah-enter{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
 @media(max-width:560px){.motion-toggle{font-size:12px;min-height:42px;margin-top:17px}.motion-running .is-entering{animation-duration:.45s}}
@@ -508,7 +505,6 @@ footer a:focus-visible{outline-color:#d5ef7b}
 
 .announcement{min-height:56px;padding:11px 24px;gap:20px;background:#163b29;border-bottom:1px solid #416342;color:#f4f7ed;font:500 15px/1.6 var(--body);letter-spacing:0}
 .announcement-badge{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;padding:5px 10px;border:1px solid #77905a;border-radius:4px;background:#244b32;color:#e2f3bc;font:700 11px/1.5 var(--body);letter-spacing:.8px}
-.announcement-badge>span{font-size:15px;line-height:1;color:#d2ed98}
 .announcement-message{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
 .announcement-message strong{font-weight:700;color:#fffdf5}
 .announcement-separator{color:#9ebc87}

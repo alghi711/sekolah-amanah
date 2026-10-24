@@ -566,8 +566,4 @@
 <polygon points="313.1,491.75 300.1,498.25 300.1,489.15 313.1,482.65" fill="#a39c7b" />
 <polygon points="280.6,466.4 313.1,482.65 300.1,489.15 267.6,472.9" fill="#dfd8b9" />
 </g>
-<path d="M128 357h8v8h8v8h-8v8h-8v-8h-8v-8h8z" fill="#92b76b"/>
-<path d="M783 470h7v7h7v7h-7v7h-7v-7h-7v-7h7z" fill="#92b76b"/>
-<path d="M270 620h6v6h6v6h-6v6h-6v-6h-6v-6h6z" fill="#92b76b"/>
-<path d="M694 156h5v5h5v5h-5v5h-5v-5h-5v-5h5z" fill="#92b76b"/>
 </svg>
