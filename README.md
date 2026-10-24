@@ -31,6 +31,17 @@ Model karakter memakai geometri dan tekstur asli dari file Blender yang diberika
 
 HTML, CSS, JavaScript, dan Three.js r128. Hosting menggunakan Wasmer Edge dengan Static Web Server. Halaman dan aset utama disimpan lokal; proyek tidak memerlukan instalasi dependency atau proses bundling.
 
+## PHP + MySQL untuk Hostinger
+
+Website pixel juga menyediakan paket Hostinger dengan PHP 8.0+ dan PDO MySQL. Berita, kartu berita tiap jenjang, dan partner dibaca dari database tanpa mengubah desain. Mode statis Wasmer tetap memakai file lokal.
+
+```sh
+node mysql/build.cjs
+node mysql/check.cjs
+```
+
+Paket hasil build berada di folder `../exports/sekolah-amanah-hostinger-mysql`. Impor `mysql/amanah.sql` lewat phpMyAdmin dan simpan kredensial di `amanah-private/database.php`, di luar `public_html`. Detail pemasangan, pemeriksaan koneksi, serta cakupan data tersedia pada [panduan MySQL Hostinger](mysql/PANDUAN-HOSTINGER.md). Database Hostinger belum dibuat atau dihubungkan oleh skrip build. Konfigurasi privat tidak disimpan di Git.
+
 ## Menjalankan secara lokal
 
 Gunakan Node.js 22 atau versi yang kompatibel.

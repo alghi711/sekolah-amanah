@@ -1,0 +1,14 @@
+Options -Indexes
+DirectoryIndex index.html
+RewriteEngine On
+
+# PHP reads MySQL; the existing HTML/CSS/JS design stays unchanged.
+RewriteRule ^content\.js$ api/content.php?format=js [L,QSA]
+RewriteRule ^(tk|sd|smp|smk)\.html$ api/profile.php?school=$1 [L,QSA]
+
+# Internal PHP helpers are not public endpoints.
+RewriteRule ^api/database\.php$ - [F,L]
+
+<FilesMatch "(^\.|\.(sql|log|ini|env|md|cjs|toml|ya?ml|bundle|bak)$)">
+    Require all denied
+</FilesMatch>

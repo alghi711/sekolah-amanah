@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "private": true,
   "description": "Konsep website Sekolah Amanah — sekolah pixel isometrik bernuansa hijau.",
-  "scripts": { "start": "node server.cjs", "test": "node check.cjs", "art": "node make-campus.cjs" }
+  "scripts": { "start": "node server.cjs", "test": "node check.cjs", "art": "node make-campus.cjs", "mysql:build": "node mysql/build.cjs", "test:mysql": "node mysql/check.cjs" }
 }

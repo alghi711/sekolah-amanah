@@ -1,4 +1,5 @@
 /dist/
+/amanah-private/
 node_modules/
 .env
 .env.*
