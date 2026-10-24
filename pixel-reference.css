@@ -491,9 +491,8 @@ footer a:focus-visible{outline-color:#d5ef7b}
 .admission-carousel{position:relative;isolation:isolate}
 .banner-viewport{position:relative;z-index:2;box-shadow:0 -2px 0 var(--shadow)}
 .banner-bottom{position:relative;z-index:2}
-.banner-greeters{position:absolute;bottom:100%;right:23%;width:290px;height:auto;aspect-ratio:11/6;transform:translateY(24px);pointer-events:none;z-index:0;user-select:none}
+.banner-greeters{position:absolute;bottom:100%;right:23%;width:24%;max-width:290px;height:auto;aspect-ratio:11/6;transform:translateY(15%);pointer-events:none;z-index:0;user-select:none}
 .banner-greeters img,.banner-greeters canvas{display:block;width:100%;height:100%;object-fit:contain}
 .banner-greeters canvas{position:absolute;inset:0}
-@media(max-width:1100px){.banner-greeters{width:250px;right:23%}}
-@media(max-width:800px){.banner-heading{margin-bottom:125px}.banner-greeters{right:50%;transform:translate(50%,24px);width:min(290px,calc(88vw - 46px))}}
+@media(max-width:800px){.banner-heading{margin-bottom:clamp(40px,12vw,80px)}}
 @media(max-width:800px){.announcement{display:grid;grid-template-columns:1fr auto;gap:8px 15px;padding:11px 20px}.announcement-badge{justify-self:start;font-size:11px}.announcement-message{grid-column:1/-1;grid-row:2;justify-content:center;gap:8px;font-size:14px}.announcement a{grid-column:2;grid-row:1;font-size:13px;margin-left:0}.announcement-separator{display:none}.announcement-message strong{margin-right:4px}}
