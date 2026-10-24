@@ -290,7 +290,7 @@ footer.wrap{max-width:none;width:100%;padding:55px max(32px,calc((100vw - 1280px
 .motion-running .partners-section.motion-inview{--partners-play-state:running}
 .partners-marquee:hover,.partners-marquee:focus-within{--partners-play-state:paused}
 .partners.is-paused{animation-play-state:paused}
-.hero h1>.hero-slogan{display:block;width:100%}
+.hero h1>.hero-slogan,.banner-intro h1>.hero-slogan{display:block;width:100%}
 .hero-chase{display:block;position:absolute;right:0;bottom:7px;width:44%;height:1.05em;pointer-events:none;user-select:none;line-height:0}
 .hero-chase img,.hero-chase canvas{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;object-position:bottom center}
 .whatsapp-bubble{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:11px;min-height:60px;padding:9px 17px 9px 9px;border:1px solid #b8d6bf;border-radius:999px;background:#fffefa;color:#173f2b;box-shadow:0 5px 20px #123d2926;transition:background-color .18s,box-shadow .18s;text-decoration:none}
@@ -519,3 +519,16 @@ footer a:focus-visible{outline-color:#d5ef7b}
 .banner-greeters canvas{position:absolute;inset:0}
 @media(max-width:800px){.banner-heading{margin-bottom:clamp(40px,12vw,80px)}}
 @media(max-width:800px){.announcement{display:grid;grid-template-columns:1fr auto;gap:8px 15px;padding:11px 20px}.announcement-badge{justify-self:start;font-size:11px}.announcement-message{grid-column:1/-1;grid-row:2;justify-content:center;gap:8px;font-size:14px}.announcement a{grid-column:2;grid-row:1;font-size:13px;margin-left:0}.announcement-separator{display:none}.announcement-message strong{margin-right:4px}}
+
+/* Welcome and admission hierarchy shared by desktop and mobile. */
+.banner-section{padding-top:38px}
+.banner-intro{max-width:640px;margin-bottom:30px}
+.banner-intro .hero-badge{display:inline-block;margin:0 0 20px;padding:8px 12px;border:1px solid #cadbc9;border-radius:6px;background:#edf4e8;color:var(--forest);font:700 12px/1.6 var(--body);letter-spacing:.25px}
+.banner-intro h1{font-size:clamp(30px,4vw,48px);line-height:1.18;letter-spacing:-.045em;margin:0}
+.banner-heading{align-items:center;gap:20px;margin-bottom:clamp(60px,9vw,110px);padding-top:22px;border-top:1px solid #dce3d5}
+.banner-heading h2{white-space:nowrap;font-size:clamp(18px,2.2vw,27px);line-height:1.3;letter-spacing:-.035em}
+.banner-year{margin:6px 0 0;color:var(--muted);font-size:13px}
+.banner-heading>.registration-link{flex-shrink:0;max-width:none;min-height:44px;padding:10px 15px;gap:15px;border:1px solid #cadbc9;border-radius:8px;background:#edf4e8;color:var(--forest);font:700 14px/1.4 var(--body);white-space:nowrap;transition:background .18s,border-color .18s}
+.banner-heading>.registration-link:hover{background:#e0edda;border-color:#8ca784;text-decoration:none}
+.banner-heading>.registration-link>span{margin:0;font-size:18px}
+@media(max-width:560px){.banner-section{padding-top:26px}.banner-intro{margin-bottom:24px}.banner-intro .hero-badge{font-size:11px;padding:7px 9px;margin-bottom:18px;letter-spacing:0}.banner-heading{flex-wrap:wrap;gap:14px;padding-top:20px;margin-bottom:clamp(48px,12vw,68px)}.banner-heading h2{font-size:clamp(18px,5.2vw,24px)}.banner-year{font-size:12px}.banner-heading>.registration-link{font-size:13px;min-height:44px;padding:10px 13px}.banner-intro .hero-chase{width:44%;height:1.05em}}
