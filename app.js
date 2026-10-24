@@ -103,7 +103,21 @@ menuButton.addEventListener('click',()=>{const open=navigation.classList.toggle(
 navigation.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&navigation.classList.contains('is-open')){closeMenu();menuButton.focus();}});
 const partners=document.querySelector('#partners');
-content.partners.forEach((src,index)=>{const img=element('img');img.src=src;img.alt=`Logo partner kerja sama Amanah ${index+1}`;img.loading='lazy';img.width=300;img.height=150;partners.append(img);});
+partners.replaceChildren();
+for(let copy=0;copy<2;copy++){
+  const group=element('div','partner-group');
+  if(copy)group.setAttribute('aria-hidden','true');
+  content.partners.forEach((src,index)=>{const img=element('img');img.src=src;img.alt=copy?'':`Logo partner kerja sama Amanah ${index+1}`;img.loading='lazy';img.width=300;img.height=150;group.append(img);});
+  partners.append(group);
+}
+const partnersToggle=document.querySelector('#partners-toggle');
+partnersToggle.hidden=false;
+partnersToggle.addEventListener('click',()=>{
+  const paused=partners.classList.toggle('is-paused');
+  partnersToggle.setAttribute('aria-pressed',String(paused));
+  partnersToggle.setAttribute('aria-label',paused?'Putar gerakan logo partner':'Jeda gerakan logo partner');
+  partnersToggle.textContent=paused?'Putar':'Jeda';
+});
 renderNews();
 
 const requestedId = new URLSearchParams(window.location.search).get('berita');

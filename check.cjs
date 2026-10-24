@@ -44,7 +44,7 @@ class Node {
   close(){this.open=false;this.emit('close');}
 }
 const selectors={};
-for(const key of ['#news-grid','#load-more','#news-status','#news-search','#content-dialog','#dialog-body','.dialog-close','.menu-toggle','#navigation','#partners'])selectors[key]=new Node();
+for(const key of ['#news-grid','#load-more','#news-status','#news-search','#content-dialog','#dialog-body','.dialog-close','.menu-toggle','#navigation','#partners','#partners-toggle'])selectors[key]=new Node();
 const filters=['all','prestasi','kegiatan'].map(filter=>{const n=new Node('button');n.dataset.filter=filter;return n;});
 selectors['#navigation'].append(new Node('a'));
 const prestigeLink=new Node('a');prestigeLink.dataset.newsCategory='prestasi';
@@ -68,7 +68,14 @@ filters[0].emit('click');selectors['#news-search'].value='  FuTsAl ';selectors['
 const trigger=grid.children[0].querySelector('button');trigger.focus();trigger.emit('click');assert.equal(selectors['#content-dialog'].open,true);assert(selectors['#dialog-body'].children.some(n=>n.id==='dialog-title'));
 selectors['.dialog-close'].emit('click');assert.equal(selectors['#content-dialog'].open,false);assert.equal(document.activeElement,trigger);
 selectors['.menu-toggle'].emit('click');assert.equal(selectors['.menu-toggle'].attrs['aria-expanded'],'true');selectors['#navigation'].children[0].emit('click');assert.equal(selectors['.menu-toggle'].attrs['aria-expanded'],'false');
-assert.equal(selectors['#partners'].children.length,17);
+assert.equal(selectors['#partners'].children.length,2,'Two matching groups provide a seamless logo loop');
+const [originalPartners,duplicatePartners]=selectors['#partners'].children;
+assert.equal(originalPartners.children.length,17);assert.equal(duplicatePartners.children.length,17);
+assert.equal(duplicatePartners.getAttribute('aria-hidden'),'true');
+assert.deepEqual(originalPartners.children.map(img=>img.src),duplicatePartners.children.map(img=>img.src));
+assert(duplicatePartners.children.every(img=>img.alt===''),'Duplicate logos are decorative');
+selectors['#partners-toggle'].emit('click');assert(selectors['#partners'].classList.contains('is-paused'));assert.equal(selectors['#partners-toggle'].getAttribute('aria-pressed'),'true');
+selectors['#partners-toggle'].emit('click');assert(!selectors['#partners'].classList.contains('is-paused'));assert.equal(selectors['#partners-toggle'].getAttribute('aria-pressed'),'false');
 prestigeLink.emit('click');assert.equal(selectors['#news-search'].value,'');assert(grid.children.every(n=>n.children[0].children[1].textContent==='PRESTASI'));
 const linkedContext=vm.createContext({window:{AMANAH_CONTENT:data,location:{search:'?berita=1028'}},document,Intl,Date,console,URLSearchParams});
 vm.runInContext(read('app.js'),linkedContext);assert(selectors['#content-dialog'].open);assert(selectors['#dialog-body'].children.some(node=>node.textContent===context.readableTitle(data.posts.find(post=>post.id===1028).title)));selectors['#content-dialog'].close();

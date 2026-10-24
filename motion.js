@@ -6,7 +6,7 @@
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   let paused = false;
   try { paused = window.localStorage.getItem('amanah-motion-paused') === 'true'; } catch {}
-  const idleTargets = document.querySelectorAll('.hero-background, .services-section, .explore-section, .cup-section, .profile-program-section');
+  const idleTargets = document.querySelectorAll('.hero-background, .services-section, .explore-section, .cup-section, .profile-program-section, .partners-section');
   const revealTargets = document.querySelectorAll('.services-intro, .service-entry, .banner-heading, .admission-carousel, #jenjang .section-heading, .level-tile, .learning-heading, .learning-card, .cup-section, #kabar .section-heading, .news-toolbar, .news-grid, .locations-heading, .location-choice, .location-map-panel, .partners-section, .profile-hero-photo, .profile-switcher, .profile-about, .profile-section-heading, .profile-program-intro, .profile-program, .profile-gallery, .profile-news-card');
   function sync() {
     const stopped = paused || reduced.matches;
