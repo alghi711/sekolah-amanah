@@ -13,7 +13,7 @@ fs.mkdirSync(destination);
 const files = [
   'index.html', 'tk.html', 'sd.html', 'smp.html', 'smk.html',
   'styles.css', 'pixel-reference.css', 'profiles.css',
-  'app.js', 'banner.js', 'campus.js', 'content.js', 'intro.js',
+  'app.js', 'banner.js', 'banner-greeters.js', 'campus.js', 'content.js', 'intro.js',
   'locations.js', 'motion.js', 'profile.js'
 ];
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(destination, file));

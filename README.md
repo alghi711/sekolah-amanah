@@ -15,6 +15,8 @@ Website Sekolah Amanah untuk jenjang KB/RA–TK, SD, SMP, dan SMK, dengan ilustr
 ## Fitur
 
 - Ilustrasi sekolah 3D yang berputar otomatis, dengan kontrol jeda dan mode pencahayaan.
+- Alex dan Steve mengintip di atas banner sambil melambaikan tangan dalam 3D, dengan gambar cadangan saat WebGL tidak tersedia.
+
 - Empat profil sekolah dengan program belajar, dokumentasi kegiatan, dan lokasi cabang.
 - Banner penerimaan murid baru 2027 yang langsung menuju formulir pendaftaran.
 - Berita kegiatan dan prestasi dengan pencarian, filter, dan detail artikel.
@@ -23,6 +25,8 @@ Website Sekolah Amanah untuk jenjang KB/RA–TK, SD, SMP, dan SMK, dengan ilustr
 - Tampilan responsif, navigasi keyboard, serta dukungan reduced motion.
 
 ## Teknologi
+
+Model karakter memakai geometri dan tekstur asli dari file Blender yang diberikan pengguna. Catatan konversi tersedia di [assets/models/README.md](assets/models/README.md).
 
 HTML, CSS, JavaScript, dan Three.js r128. Hosting menggunakan Wasmer Edge dengan Static Web Server. Halaman dan aset utama disimpan lokal; proyek tidak memerlukan instalasi dependency atau proses bundling.
 

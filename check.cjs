@@ -200,6 +200,59 @@ vm.runInContext(read('campus.js'),failedContext);
 assert.equal(failedNodes['#campus-fallback'].hidden,false);assert.equal(failedNodes['#campus-left'].disabled,true);
 console.log('PASS: smooth level palettes, isolated materials, interrupted transitions, reduced motion, zone selection, automatic rotation unaffected by touch, daylight, reset, resize and fallback.');
 const bannerNodes={};
+(async()=>{
+  const source=read('banner-greeters.js');
+  class MemoryTextureLoader extends THREE.Loader{load(url,onLoad){const texture=new THREE.Texture({width:64,height:64});queueMicrotask(()=>onLoad(texture));return texture;}}
+  const assetThree={...THREE,TextureLoader:MemoryTextureLoader};
+  vm.runInNewContext(read('assets/vendor/GLTFLoader.js'),{THREE:assetThree,console,URL,Blob,self:{URL},ArrayBuffer,Uint8Array,DataView});
+  const scenes=await Promise.all(['steve','alex'].map(name=>new Promise((resolve,reject)=>{
+    const data=fs.readFileSync(path.join(root,'assets/models/'+name+'.glb'));
+    assert.equal(data.readUInt32LE(0),0x46546c67);
+    const manifest=JSON.parse(data.subarray(20,20+data.readUInt32LE(12)).toString('utf8'));
+    assert.equal(manifest.meshes.length,6,'All six original body parts are preserved');
+    assert.equal(manifest.images.length,1);assert(manifest.images[0].bufferView!==undefined,'Original skin is embedded');
+    new assetThree.GLTFLoader().parse(data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength),'',asset=>resolve(asset.scene),reject);
+  })));
+  const modelContext={window:{}};vm.runInNewContext(source,modelContext);
+  const greeters=modelContext.window.AmanahGreeters.createGreeters(THREE,scenes.map(scene=>scene.clone(true)));
+  assert.equal(greeters.characters.map(item=>item.character.name).join(','),'Steve,Alex');
+  const angles=greeters.characters.map(item=>item.wave.rotation.z);
+  greeters.pose(.7);greeters.characters.forEach((item,index)=>assert.notEqual(item.wave.rotation.z,angles[index]));
+  let parts=0;greeters.group.traverse(item=>{if(item.isMesh){parts++;assert(item.material.color.toArray().every(Number.isFinite));}});
+  assert.equal(parts,12,'The greeters use the actual meshes from both supplied models');
+  const host=new Node(),fallback=new Node('img'),events=new Node(),windowEvents=new Node(),preferenceEvents=new Node();host.append(fallback);host.clientWidth=270;host.clientHeight=180;
+  const preference={matches:false,addEventListener:(...args)=>preferenceEvents.addEventListener(...args)};
+  const frames=new Map();let nextFrame=0,visibility,renderedScene;
+  class GreeterRenderer extends MemoryRenderer{render(scene,camera){super.render(scene,camera);renderedScene=scene;}}
+  const doc={hidden:false,querySelector:()=>host,addEventListener:(...args)=>events.addEventListener(...args)};
+  class LocalModelLoader{load(url,onLoad){const index=url.includes('steve')?0:1;queueMicrotask(()=>onLoad({scene:scenes[index].clone(true)}));}}
+  const win={THREE:{...THREE,GLTFLoader:LocalModelLoader,WebGLRenderer:GreeterRenderer},devicePixelRatio:1,localStorage:{getItem:()=>null},matchMedia:()=>preference,IntersectionObserver:class{constructor(callback){visibility=callback;}observe(){}},addEventListener:(...args)=>windowEvents.addEventListener(...args)};
+  vm.runInNewContext(source,{window:win,document:doc,ResizeObserver:class{observe(){}},requestAnimationFrame:callback=>{const id=++nextFrame;frames.set(id,callback);return id;},cancelAnimationFrame:id=>frames.delete(id)});
+  events.emit('amanah:motion',{detail:{paused:true}});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert(fallback.hidden);assert.equal(frames.size,0,'Offscreen mascots do not animate');
+  visibility([{isIntersecting:true}]);assert.equal(frames.size,0,'Pause preferences received while models load are retained');
+  events.emit('amanah:motion',{detail:{paused:false}});
+  visibility([{isIntersecting:true}]);assert.equal(frames.size,1);
+  const tick=time=>{const [id,callback]=frames.entries().next().value;frames.delete(id);callback(time);};
+  const wave=renderedScene.getObjectByName('Steve_WaveArm');
+  const initial=wave.rotation.z;tick(40);tick(80);assert.notEqual(wave.rotation.z,initial,'The visible character actually waves');
+  events.emit('amanah:motion',{detail:{paused:true}});assert.equal(frames.size,0);
+  events.emit('amanah:motion',{detail:{paused:false}});assert.equal(frames.size,1);
+  preference.matches=true;preferenceEvents.emit('change');assert.equal(frames.size,0,'Reduced motion stops waving');
+  preference.matches=false;preferenceEvents.emit('change');assert.equal(frames.size,1);
+  doc.hidden=true;events.emit('visibilitychange');assert.equal(frames.size,0);doc.hidden=false;events.emit('visibilitychange');
+  visibility([{isIntersecting:false}]);assert.equal(frames.size,0);visibility([{isIntersecting:true}]);
+  host.children[1].emit('webglcontextlost',{preventDefault(){}});assert.equal(fallback.hidden,false);assert.equal(frames.size,0);
+  windowEvents.emit('pageshow');assert.equal(frames.size,0,'Lost WebGL contexts keep the static fallback');
+  const failedHost=new Node(),failedImage=new Node('img');failedHost.append(failedImage);
+  class FailingModelLoader{load(url,onLoad,progress,onError){queueMicrotask(()=>onError(new Error('Model unavailable')));}}
+  vm.runInNewContext(source,{window:{...win,THREE:{...win.THREE,GLTFLoader:FailingModelLoader}},document:{...doc,querySelector:()=>failedHost}});
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(failedImage.hidden,false,'A failed model download keeps the original-model PNG visible');assert.equal(failedHost.children.length,1,'No renderer is created for unavailable models');
+  assert(html.includes('id="banner-greeters"'));assert(read('prepare-deploy.cjs').includes("'banner-greeters.js'"));
+  console.log('PASS: original Steve and Alex GLBs, embedded skins, real loader compatibility, waving, loading-time pause, reduced motion, visibility and fallback.');
+})().catch(error=>{console.error(error);process.exitCode=1;});
 for(const key of ['#admission-carousel','#banner-track','#banner-play','#banner-prev','#banner-next','#banner-name','#banner-counter','#banner-full','#banner-status'])bannerNodes[key]=new Node();
 bannerNodes['#banner-track'].style={};
 const bannerSlides=['SDIT Amanah','SMK Amanah','KB/RA–TK Amanah','SMP Amanah'].map((name,index)=>{const slide=new Node('a');slide.dataset.name=name;const image=new Node('img');image.setAttribute('src',['assets/spmb-sd-2027.png','assets/spmb-smk-2027.png','assets/spmb-tk.png','assets/spmb-smp-2027.png'][index]);slide.append(image);return slide;});
@@ -320,7 +373,7 @@ console.log('PASS: banner autoplay, unique slides, wraparound, navigation, pause
   const child=spawn(process.execPath,[path.join(root,'server.cjs')],{env:{...process.env,PORT:'0'},stdio:['ignore','pipe','pipe']});
   try{
     const base=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Server timeout')),10000);child.once('error',reject);child.stdout.on('data',data=>{const match=data.toString().match(/http:\/\/localhost:\d+/);if(match){clearTimeout(timer);resolve(match[0]);}});});
-    for(const asset of ['','tk.html','sd.html','smp.html','smk.html','styles.css','pixel-reference.css','profiles.css','profile.js','app.js','campus.js','locations.js','motion.js','intro.js','content.js','assets/campus.svg','assets/vendor/three.min.js','assets/plus-jakarta-sans.ttf','assets/silkscreen.ttf']){const response=await fetch(base+'/'+asset);assert.equal(response.status,200,asset);assert((await response.arrayBuffer()).byteLength>0);}
+    for(const asset of ['','tk.html','sd.html','smp.html','smk.html','styles.css','pixel-reference.css','profiles.css','profile.js','app.js','campus.js','locations.js','motion.js','intro.js','content.js','assets/campus.svg','assets/vendor/three.min.js','assets/vendor/GLTFLoader.js','assets/models/steve.glb','assets/models/alex.glb','assets/banner-greeters.png','assets/plus-jakarta-sans.ttf','assets/silkscreen.ttf']){const response=await fetch(base+'/'+asset);assert.equal(response.status,200,asset);assert((await response.arrayBuffer()).byteLength>0);}
     assert.equal((await fetch(base+'/missing-file')).status,404);
     assert.equal((await fetch(base+'/',{method:'POST'})).status,405);
     assert.equal((await fetch(base+'/%2e%2e%2f.gitignore')).status,403);
