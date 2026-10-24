@@ -89,7 +89,7 @@ console.log('PASS: content, local assets, navigation anchors, filters, search, p
   for(const [key,count] of [['tk',4],['sd',2],['smp',1],['smk',1]]){
     assert(html.includes(`class="level-tile ${key}" href="${key}.html"`));
     const page=read(`${key}.html`);assert(page.includes(`class="profile-page profile-${key}"`));
-    assert(page.includes('class="footer-youtube" href="https://youtube.com/@sekolahamanahtv?si=uGbNANg7oGSKSqxz"'));
+    assert(!page.includes('class="footer-socials"'),'Footer social duplicates are removed');
     assert(!page.includes('class="instagram-card '),'Profiles use a compact Instagram link');
     assert.equal((page.match(/class="profile-instagram-link"/g)||[]).length,key==='tk'?0:1,'Only available school accounts are shown');
     if(instagramAccounts[key])assert(page.includes(`class="profile-instagram-link" href="https://www.instagram.com/${instagramAccounts[key]}/"`),'Profile links to its own Instagram account');

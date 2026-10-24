@@ -436,31 +436,24 @@ html.intro-active{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.site-intro{transition:none;display:none}}
 
 /* Shared foundation footer, also used by the four school profiles. */
-footer.wrap{padding-top:48px;padding-bottom:25px;background:linear-gradient(115deg,#102e22,#0e241b);border-top:3px solid #a3d85d;position:relative}
-footer .footer-top{align-items:flex-start;padding-bottom:34px;gap:32px}
-.footer-identity{min-width:0}
+footer.wrap{padding-top:48px;padding-bottom:25px;background:linear-gradient(115deg,#102e22,#0e241b);border-top:2px solid #668b55;position:relative}
+footer .footer-top{align-items:center;padding-bottom:28px;gap:28px}
+.footer-identity{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;min-width:0}
 footer .footer-brand{gap:17px;align-items:center;max-width:100%;width:fit-content}
 footer .footer-brand img{width:64px;height:64px;object-fit:contain;background:#fffdf5;padding:7px;border:1px solid #c4d4b2;box-shadow:4px 4px 0 #284a36;flex-shrink:0}
 footer .footer-brand-copy{display:flex;flex-direction:column;gap:7px;letter-spacing:0;min-width:0}
 .footer-brand-copy small{font:700 11px/1.3 var(--body);letter-spacing:2.5px;color:#b8ceaa}
 .footer-brand-copy strong{font:700 clamp(23px,2.1vw,30px)/1.15 var(--body);letter-spacing:-.8px;color:#f3f5e9}
-.footer-description{font-size:14px;line-height:1.9;margin:22px 0 0;color:#c2d0ba}
+.footer-description{font-size:14px;line-height:1.9;margin:0;color:#d3dfc9;text-align:right}
 .footer-description>span{color:#9db797;font-size:13px}
-.footer-socials{padding-top:5px;flex-shrink:0}
-.footer-socials>p{font-size:13px;font-weight:600;color:#c3d3b8;margin-bottom:16px}
-.footer-socials>div{display:flex;gap:10px;flex-wrap:wrap}
-.footer-socials a{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;min-width:82px;min-height:44px;padding:9px 13px;border:1px solid #3e5d46;border-radius:7px;background:#ffffff05;color:#e7edda;font-size:13px;font-weight:700;transition:background-color .18s,border-color .18s}
-.footer-socials a>span{color:#bbdf8a;font-size:17px;font-weight:400}
-.footer-socials a:hover{background:#ffffff0d;border-color:#9fc775}
-footer .footer-bottom{flex-direction:row;align-items:center;flex-wrap:wrap;border-top:1px solid #ffffff1f;padding-top:22px;gap:18px;color:#aec1a6}
-.footer-bottom>p{font-size:12px;line-height:1.7;margin:0}
-.footer-credit{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#e1e9d5}
+footer .footer-bottom{flex-direction:row;align-items:center;flex-wrap:wrap;border:1px solid #ffffff17;border-radius:12px;padding:14px 18px;gap:14px 24px;background:#ffffff04;color:#c4d2bc}
+.footer-bottom>p{font-size:13px;line-height:1.7;margin:0}
+.footer-credit{display:inline-flex;align-items:center;gap:10px;padding:6px 10px;border-radius:7px;background:#d4e9b60a;font-size:13px;font-weight:600;color:#e1e9d5}
 .footer-credit-icon{display:grid;place-items:center;width:27px;height:27px;color:#b7d98a}
 .footer-credit-icon svg{width:23px;height:23px}
 .footer-credit-year{font:10px/1.4 var(--pixel);padding:6px 8px;border:1px solid #58734a;background:#223d2b;border-radius:4px;color:#c5df9d;margin-left:3px}
 footer a:focus-visible{outline-color:#d5ef7b}
-@media(max-width:560px){footer.wrap{padding:34px 22px 23px}footer .footer-top{flex-direction:column;gap:27px;padding-bottom:28px}footer .footer-brand{gap:14px}footer .footer-brand img{width:56px;height:56px;padding:6px}.footer-brand-copy strong{font-size:24px;letter-spacing:-.7px}.footer-brand-copy small{font-size:10px;letter-spacing:2px}.footer-description{font-size:13px;margin-top:19px}.footer-description>span{font-size:12px}.footer-socials{padding-top:0}.footer-socials>p{font-size:12px;margin-bottom:12px}.footer-socials a{min-width:80px}footer .footer-bottom{flex-direction:column;align-items:flex-start;gap:17px;padding-top:20px}.footer-bottom>p{font-size:11px}.footer-credit{font-size:12px}}
-@media(prefers-reduced-motion:reduce){.footer-socials a{transition:none}}
+@media(max-width:560px){footer.wrap{padding:34px 22px 23px}footer .footer-top{flex-direction:column;gap:27px;padding-bottom:28px}footer .footer-brand{gap:14px}footer .footer-brand img{width:56px;height:56px;padding:6px}.footer-brand-copy strong{font-size:24px;letter-spacing:-.7px}.footer-brand-copy small{font-size:10px;letter-spacing:2px}.footer-identity{flex-direction:column;align-items:flex-start;gap:18px}.footer-description{font-size:13px;margin:0;text-align:left}.footer-description>span{font-size:12px}footer .footer-bottom{flex-direction:column;align-items:flex-start;gap:12px;padding:16px}.footer-bottom>p{font-size:12px}.footer-credit{font-size:12px}}
 
 .instagram-section{padding-block:15px 55px}
 .instagram-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:28px}
@@ -538,7 +531,5 @@ footer a:focus-visible{outline-color:#d5ef7b}
 .instagram-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 .instagram-card.youtube{--ig-accent:#c52d2d;--ig-soft:#fff0ed}
 .instagram-card.youtube h3{font-size:21px}
-.footer-youtube-icon{display:inline-flex;align-items:center}
-.footer-youtube-icon svg{width:18px;height:18px}
 @media(max-width:1000px){.instagram-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.instagram-grid{grid-template-columns:1fr}.instagram-card.youtube h3{font-size:23px}}
