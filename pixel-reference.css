@@ -534,3 +534,11 @@ footer a:focus-visible{outline-color:#d5ef7b}
 .registration-panel>.registration-link:hover{background:#e4f5c8;transform:translateY(-2px);text-decoration:none}
 .registration-panel>.registration-link>span{display:grid;place-items:center;width:26px;height:26px;margin:0;background:#234d34;border-radius:4px;color:#e4f5c8;font-size:18px}
 @media(max-width:560px){.banner-section{padding-top:26px;padding-bottom:20px}.banner-intro{margin-bottom:clamp(52px,14vw,78px)}.banner-intro .hero-badge{font-size:11px;padding:7px 9px;margin-bottom:18px;letter-spacing:0}.registration-panel.banner-heading{flex-direction:column;align-items:stretch;gap:20px;margin-top:22px;padding:20px 18px;border-radius:12px}.registration-panel h2{font-size:clamp(17px,5vw,24px)}.registration-panel .banner-year{font-size:11px;gap:8px}.banner-year>span{font-size:10px}.registration-note{font-size:13px;max-width:30em}.registration-panel>.registration-link{justify-content:space-between;width:100%;font-size:14px;min-height:48px}.banner-intro .hero-chase{width:44%;height:1.05em}}
+
+.instagram-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.instagram-card.youtube{--ig-accent:#c52d2d;--ig-soft:#fff0ed}
+.instagram-card.youtube h3{font-size:21px}
+.footer-youtube-icon{display:inline-flex;align-items:center}
+.footer-youtube-icon svg{width:18px;height:18px}
+@media(max-width:1000px){.instagram-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.instagram-grid{grid-template-columns:1fr}.instagram-card.youtube h3{font-size:23px}}
