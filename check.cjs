@@ -263,6 +263,34 @@ const bannerNodes={};
   vm.runInNewContext(source,{window:{...win,THREE:{...win.THREE,GLTFLoader:FailingModelLoader}},document:{...doc,querySelector:()=>failedHost}});
   await new Promise(resolve=>setImmediate(resolve));
   assert.equal(failedImage.hidden,false,'A failed model download keeps the original-model PNG visible');assert.equal(failedHost.children.length,1,'No renderer is created for unavailable models');
+  const chaseSource=read('portal-chase.js');vm.runInNewContext(chaseSource,modelContext);
+  const chase=modelContext.window.AmanahPortalChase;
+  assert.equal(chase.sample('Alex',.5,-20,20).visible,false);
+  assert.equal(chase.sample('Alex',1.1,-20,20).mode,'run');
+  assert.equal(chase.sample('Alex',8.5,-20,20).visible,false);
+  assert.equal(chase.sample('Steve',9.5,-20,20).mode,'wave');
+  assert.equal(chase.sample('Steve',9.5,-20,20).x,chase.sample('Steve',10.5,-20,20).x,'Steve stands still while waving');
+  assert.equal(chase.sample('Steve',11.3,-20,20).mode,'run');assert.equal(chase.sample('Steve',12,-20,20).visible,false);
+  assert.equal(JSON.stringify(chase.sample('Steve',5,-20,20)),JSON.stringify(chase.sample('Steve',19,-20,20)),'Portal story loops exactly');
+  const story=chase.createChase(THREE,scenes.map(scene=>scene.clone(true)));
+  assert.equal(story.portals.length,2);
+  for(const width of [14,24,35])for(let time=0;time<14;time+=.1){
+    story.pose(time,width);
+    for(const actor of story.actors){assert(Number.isFinite(actor.character.position.x));assert(Math.abs(actor.character.position.x)<width);}
+    const [steve,alex]=story.actors.map(actor=>actor.character);
+    if(steve.visible&&alex.visible)assert(alex.position.x-steve.position.x>2,'Alex stays ahead without touching Steve');
+  }
+  const chaseHost=new Node(),chaseFallback=new Node('img');chaseHost.append(chaseFallback);chaseHost.clientWidth=240;chaseHost.clientHeight=60;
+  vm.runInNewContext(chaseSource,{window:{...win,AmanahGreeters:modelContext.window.AmanahGreeters},document:{...doc,querySelector:()=>chaseHost},ResizeObserver:class{observe(){}},requestAnimationFrame:callback=>{const id=++nextFrame;frames.set(id,callback);return id;},cancelAnimationFrame:id=>frames.delete(id)});
+  await new Promise(resolve=>setImmediate(resolve));assert(chaseFallback.hidden);assert.equal(frames.size,0);
+  visibility([{isIntersecting:true}]);assert.equal(frames.size,1);
+  events.emit('amanah:motion',{detail:{paused:true}});assert.equal(frames.size,0);
+  events.emit('amanah:motion',{detail:{paused:false}});assert.equal(frames.size,1);
+  preference.matches=true;preferenceEvents.emit('change');assert.equal(frames.size,0,'Reduced motion freezes the portal scene');
+  preference.matches=false;preferenceEvents.emit('change');assert.equal(frames.size,1);
+  visibility([{isIntersecting:false}]);assert.equal(frames.size,0);
+  visibility([{isIntersecting:true}]);chaseHost.children[1].emit('webglcontextlost',{preventDefault(){}});assert.equal(chaseFallback.hidden,false);assert.equal(frames.size,0);
+  console.log('PASS: portal entry, running order and separation, Steve stopping and waving, return portal, exact loop, pause, visibility and fallback.');
   assert(html.includes('id="banner-greeters"'));assert(read('prepare-deploy.cjs').includes("'banner-greeters.js'"));
   console.log('PASS: original Steve and Alex GLBs, embedded skins, real loader compatibility, waving, loading-time pause, reduced motion, visibility and fallback.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
@@ -386,7 +414,7 @@ console.log('PASS: banner autoplay, unique slides, wraparound, navigation, pause
   const child=spawn(process.execPath,[path.join(root,'server.cjs')],{env:{...process.env,PORT:'0'},stdio:['ignore','pipe','pipe']});
   try{
     const base=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Server timeout')),10000);child.once('error',reject);child.stdout.on('data',data=>{const match=data.toString().match(/http:\/\/localhost:\d+/);if(match){clearTimeout(timer);resolve(match[0]);}});});
-    for(const asset of ['','tk.html','sd.html','smp.html','smk.html','styles.css','pixel-reference.css','profiles.css','profile.js','app.js','campus.js','locations.js','motion.js','intro.js','content.js','assets/campus.svg','assets/vendor/three.min.js','assets/vendor/GLTFLoader.js','assets/models/steve.glb','assets/models/alex.glb','assets/banner-greeters.png','assets/plus-jakarta-sans.ttf','assets/silkscreen.ttf']){const response=await fetch(base+'/'+asset);assert.equal(response.status,200,asset);assert((await response.arrayBuffer()).byteLength>0);}
+    for(const asset of ['','tk.html','sd.html','smp.html','smk.html','styles.css','pixel-reference.css','profiles.css','profile.js','app.js','campus.js','locations.js','motion.js','intro.js','content.js','assets/campus.svg','assets/vendor/three.min.js','assets/vendor/GLTFLoader.js','assets/models/steve.glb','assets/models/alex.glb','assets/banner-greeters.png','portal-chase.js','assets/hero-chase.png','assets/plus-jakarta-sans.ttf','assets/silkscreen.ttf']){const response=await fetch(base+'/'+asset);assert.equal(response.status,200,asset);assert((await response.arrayBuffer()).byteLength>0);}
     assert.equal((await fetch(base+'/missing-file')).status,404);
     assert.equal((await fetch(base+'/',{method:'POST'})).status,405);
     assert.equal((await fetch(base+'/%2e%2e%2f.gitignore')).status,403);

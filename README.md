@@ -16,6 +16,7 @@ Website Sekolah Amanah untuk jenjang KB/RA–TK, SD, SMP, dan SMK, dengan ilustr
 
 - Ilustrasi sekolah 3D yang berputar otomatis, dengan kontrol jeda dan mode pencahayaan.
 - Alex dan Steve mengintip di atas banner sambil melambaikan tangan dalam 3D, dengan gambar cadangan saat WebGL tidak tersedia.
+- Adegan mini portal di atas garis slogan: Alex dan Steve berlari, lalu Steve berhenti untuk dadah sebelum masuk portal. Animasi mengulang dan mengikuti pengaturan jeda.
 
 - Empat profil sekolah dengan program belajar, dokumentasi kegiatan, dan lokasi cabang.
 - Banner penerimaan murid baru 2027 yang langsung menuju formulir pendaftaran.
