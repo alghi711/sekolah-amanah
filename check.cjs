@@ -218,6 +218,12 @@ const bannerNodes={};
   assert.equal(greeters.characters.map(item=>item.character.name).join(','),'Steve,Alex');
   const angles=greeters.characters.map(item=>item.wave.rotation.z);
   greeters.pose(.7);greeters.characters.forEach((item,index)=>assert.notEqual(item.wave.rotation.z,angles[index]));
+  for(const time of [0,.7,2.2,4]){
+    greeters.pose(time);
+    const left=new THREE.Box3().setFromObject(greeters.characters[0].character);
+    const right=new THREE.Box3().setFromObject(greeters.characters[1].character);
+    assert(right.min.x-left.max.x>.3,'The two characters remain visibly separated throughout their wave');
+  }
   let parts=0;greeters.group.traverse(item=>{if(item.isMesh){parts++;assert(item.material.color.toArray().every(Number.isFinite));}});
   assert.equal(parts,12,'The greeters use the actual meshes from both supplied models');
   const host=new Node(),fallback=new Node('img'),events=new Node(),windowEvents=new Node(),preferenceEvents=new Node();host.append(fallback);host.clientWidth=270;host.clientHeight=180;

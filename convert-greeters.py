@@ -138,7 +138,7 @@ for index, name in enumerate(['steve', 'alex']):
     bpy.ops.import_scene.gltf(filepath=str(output / f'{name}.glb'))
     root = bpy.data.objects[name.title()]
     root.rotation_mode = 'XYZ'
-    root.location.x = 1.55 if index else -1.55
+    root.location.x = 2.4 if index else -2.4
     root.rotation_euler.z = -.12 if index else .12
     outer = 1 if index else -1
     wave = bpy.data.objects[name.title() + '_WaveArm']
@@ -152,8 +152,8 @@ scene = bpy.context.scene
 scene.render.engine = 'CYCLES'
 scene.cycles.device = 'CPU'
 scene.cycles.samples = 16
-scene.render.resolution_x = 1200
-scene.render.resolution_y = 800
+scene.render.resolution_x = 1320
+scene.render.resolution_y = 720
 scene.render.resolution_percentage = 100
 scene.render.film_transparent = True
 scene.render.image_settings.file_format = 'PNG'
@@ -177,6 +177,6 @@ bpy.context.collection.objects.link(camera)
 camera.location = (3, -24, 5.7)
 camera.rotation_euler = (Vector((0, 0, 3.05)) - camera.location).to_track_quat('-Z', 'Y').to_euler()
 camera_data.type = 'ORTHO'
-camera_data.ortho_scale = 10.2
+camera_data.ortho_scale = 12.4666667
 scene.camera = camera
 bpy.ops.render.render(write_still=True)

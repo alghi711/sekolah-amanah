@@ -9,7 +9,7 @@
       const rest = character.getObjectByName(name + '_RestArm');
       if (!head || !wave || !rest) throw new Error('Incomplete original character model');
       character.name = name;
-      character.position.x = index ? 1.55 : -1.55;
+      character.position.x = index ? 2.4 : -2.4;
       character.rotation.y = index ? -.12 : .12;
       rest.rotation.x = -.12;
       character.traverse(mesh => {
