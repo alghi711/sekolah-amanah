@@ -1,0 +1,11 @@
+[package]
+name = "sekolah-amanah"
+version = "1.0.0"
+description = "Website Yayasan Amanah HZAA"
+
+[dependencies]
+"wasmer/static-web-server" = "1"
+
+[fs]
+public = "dist"
+settings = "settings"

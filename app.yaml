@@ -1,0 +1,10 @@
+kind: wasmer.io/App.v0
+name: sekolah-amanah
+owner: alghifari1235
+description: Website Yayasan Amanah HZAA - TK, SD, SMP, dan SMK
+package: .
+env:
+  SERVER_CONFIG_FILE: /settings/config.toml
+redirect:
+  force_https: true
+app_id: da_RxJIdtAU0kjb

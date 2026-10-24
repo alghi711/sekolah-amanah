@@ -1,0 +1,15 @@
+[general]
+host = "::"
+port = 8080
+root = "/public"
+log-level = "error"
+compression = true
+directory-listing = false
+cache-control-headers = false
+
+[[advanced.headers]]
+source = "**/*"
+[advanced.headers.headers]
+Cache-Control = "no-cache"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,0 +1,50 @@
+# Sekolah Amanah Pixel
+
+Konsep: dunia sekolah yang hangat, kreatif, dan penuh peluang. Sebuah sekolah mini isometrik dengan bentuk voxel/pixel menjadi pusat visual, sementara informasi sekolah tetap disampaikan dengan jelas.
+
+## Arah visual
+
+- Ilustrasi sekolah buatan khusus: bangunan bertingkat, pepohonan blok, siswa, lapangan, dan bendera Indonesia. Ini ilustrasi imajinatif, bukan denah atau representasi fasilitas yang dijanjikan.
+- Revisi mengikuti referensi HTML pengguna: garis 2px, bayangan kotak tegas, grid pixel, kartu berbingkai, label pixel, dan hijau–lime.
+- Sekolah menggunakan Three.js r128 yang disimpan lokal, dengan kamera ortografis, geometri voxel, dan bayangan. Ilustrasi berputar otomatis. Sentuhan dan geser tidak mengubah arah atau menghentikan putaran; area ilustrasi tidak mengambil fokus keyboard. Tombol putar, Auto, reset, dan pencahayaan pagi/senja tetap tersedia. Model menggunakan 209 mesh dan berhenti merender ketika keluar layar atau tab tersembunyi.
+- Gambar SVG tersedia sebagai fallback ketika tampilan 3D tidak dapat dijalankan. Kontrol yang memerlukan 3D dinonaktifkan pada keadaan itu; informasi tiap jenjang tetap dapat dibaca.
+- Hijau hutan `#1E4631`: identitas, judul, tombol utama.
+- Hijau daun `#317450`: penekanan dan aksen.
+- Mint `#C4E8D4`: area pendukung.
+- Lime `#A3E635`: sorotan kecil dan pendaftaran.
+- Putih hangat `#F9F8F3`: ruang baca.
+- Plus Jakarta Sans untuk judul/isi, Silkscreen untuk label pixel, monospace untuk navigasi sekunder.
+- Gerakan melayang pelan pada sekolah dan efek tombol tertekan. Sekolah mulai berputar otomatis saat halaman dibuka; tombol Auto dapat menjeda putaran. Preferensi reduced motion dan jeda animasi tetap dihormati.
+- Ilustrasi buku, ikon layanan, dan lapangan futsal melayang halus dalam siklus 7–10 detik; ikon kecil dan cahaya latar bergerak lebih pelan. Bagian halaman muncul sekali dengan pergeseran pendek saat terlihat. Teks isi dan tombol tetap stabil. Animasi dekoratif berhenti saat di luar layar atau tab tersembunyi. Tombol Jeda animasi pada hero menghentikan dekorasi, gerak 3D otomatis, dan pergantian banner; pilihan tersimpan di browser. Pengaturan reduced motion perangkat selalu dihormati, dan isi tetap tampil tanpa JavaScript atau IntersectionObserver.
+- Model 3D menyediakan palet per jenjang: TK hijau terang, SD hijau lebih gelap, SMP biru gelap, SMK abu-abu. Atap, dinding, kusen, dan kaca berganti warna tanpa mengubah warna pepohonan, bendera, atau lapangan. Kontrol Reset mengembalikan palet hijau awal.
+
+## Susunan halaman
+
+1. Pengumuman Forsaken IX Cup, identitas sekolah, dan navigasi. Akses Forsaken Cup berada di urutan pertama; Layanan, Jenjang, serta pendaftaran tetap tersedia di header.
+   Saat membuka halaman utama, intro singkat menampilkan logo Amanah, blok pixel tersusun, dan indikator loading tanpa persentase rekaan. Intro menunggu halaman siap dengan durasi minimum 0,95 detik serta batas tunggu 3 detik. Tombol Langsung masuk atau input keyboard melewatinya. Intro tidak tampil tanpa JavaScript, saat reduced motion aktif, saat animasi telah dijeda pengunjung, atau ketika membuka tautan langsung ke bagian halaman; navigasi kembali tidak mengulang intro.
+2. Tepat di bawah navigasi, sebelum hero, karusel empat banner SPMB (SDIT, SMK, TK, SMP) berganti setiap 8 detik. Tahun pada judul dan poster SDIT, SMK, serta SMP diperbarui menjadi 2027; poster TK tidak memuat tahun. Tersedia pilihan banner, navigasi, jeda, dan tautan gambar penuh. Klik gambar pada keempat banner langsung membuka Google Form pendaftaran di tab baru. Autoplay berhenti saat hover, fokus keyboard, tab tersembunyi, atau keluar layar; preferensi reduced motion menonaktifkan autoplay. Catatan aset dan prompt edit ada di `assets/SPMB-2027-NOTES.md`.
+3. Hero dengan pesan “Tumbuh berilmu. Berbekal iman. Berakhlak mulia.” dan ilustrasi sekolah pixel. Pilihan jenjang di hero langsung membuka profil lokal TK, SD, SMP, atau SMK; tautan Semua menuju menu jenjang. Tautan profil tidak mengubah atau memutar ilustrasi 3D.
+4. Pilihan KB/RA–TK, SD, SMP, SMK langsung setelah hero, sebelum Forsaken dan layanan.
+   Menu jenjang berupa empat kartu putih dengan sudut membulat. Tulisan KB/TK, SD, SMP, dan SMK memakai font Silkscreen tebal berwarna dengan bayangan untuk efek pixel 3D. Setiap kartu membuka halaman profil lokal: `tk.html`, `sd.html`, `smp.html`, dan `smk.html`. Halaman profil mengikuti desain utama dengan aksen TK hijau terang, SD hijau lebih gelap, SMP biru gelap, dan SMK abu-abu; memuat profil, program, berita sekolah, galeri TK, peta cabang yang relevan, serta akses formulir SPMB. Bagian tentang sekolah memasangkan foto kegiatan dengan deskripsi, lalu tiga poin pendekatan belajar dalam strip ringkas. Program memakai panel warna jenjang berilustrasi buku pixel, berdampingan dengan daftar program berikon. Tampilan ditumpuk pada layar kecil, dan ilustrasi mengikuti kontrol jeda animasi. Menu antarjenjang menghubungkan keempat halaman.
+   Sorotan Forsaken IX Cup tepat setelah menu jenjang, sebelum layanan. Kartu event lebih padat, memakai hijau hutan, judul besar dengan aksen lime, ilustrasi futsal isometrik, tanggal yang terbaca, dan tombol arena lime. Tanggal 3–13 November 2026 dan tujuan arena asli dipertahankan. Versi mobile menempatkan ilustrasi di samping judul agar kartu tidak terlalu tinggi. Penanda Sorotan menonjolkan event tanpa menambahkan klaim live atau status pendaftaran.
+5. Panel Akses Cepat di bawah ilustrasi sekolah memuat Pijar Sekolah dan Layanan Surat SMK. Dua kartu ringkas berikon langsung membuka layanan asli di tab baru; label panel menjelaskan cakupan SMK. Navigasi Layanan menuju panel ini. Bagian layanan besar yang lama dihapus; akses formulir SPMB menggunakan tombol Info pendaftaran pada hero (id spmb), serta tombol navigasi dan banner.
+6. Nilai pendidikan Islami serta pengalaman belajar dan prestasi.
+   Bagian pengalaman belajar mewakili seluruh jenjang melalui tiga kartu: belajar dan bereksplorasi, iman dan akhlak, serta bakat dan percaya diri. Ilustrasi buku isometrik, kartu hijau hutan, dan kartu mint menyatukan tema pixel dengan tipografi yang lebih terbaca. Contoh kegiatan tetap bersumber dari website asal: belajar sambil bermain, sentra, field study, praktik kejuruan, pembiasaan ibadah, tahfidz, Amanah Talent Show, seni, dan olahraga. Tautan kegiatan dan prestasi membuka filter berita yang sesuai.
+7. Kabar Amanah: pencarian, filter kegiatan/prestasi, pemuatan bertahap, serta detail artikel.
+8. Empat pilihan lokasi sekolah dengan peta Google Maps interaktif, alamat lengkap, dan tombol petunjuk arah. Titik peta diambil dari koordinat tujuan empat tautan Maps asli yang diperiksa pada 24 Oktober 2026. Pilihan sekolah memperbarui peta, nama, alamat, dan tautan arah; sekolah terpilih ditandai secara visual serta melalui `aria-pressed`. Peta membutuhkan koneksi internet, sedangkan alamat dan tautan arah tetap tersedia jika sematan peta gagal. Tautan alternatif tersedia tanpa JavaScript.
+9. Partner kerja sama dengan logo lebih besar dalam grid enam kolom pada desktop, tiga kolom pada tablet, dan dua kolom pada ponsel.
+10. Footer beridentitas Yayasan Amanah HZAA, kredit Tim IT Amanah 2026, dan tautan media sosial. Tombol Daftar sekolah di navigasi, Info pendaftaran di hero, serta semua gambar banner langsung membuka Google Form asli di tab baru. Tidak ada blok pendaftaran besar di bawah.
+
+## Informasi dan sumber
+
+Konten diambil dari https://sekolahamanah.sch.id/ pada 24 Oktober 2026. Snapshot berisi 29 artikel (15 prestasi dan 14 kegiatan), profil TK/SD/SMK, dan 17 gambar partner. Foto, logo sekolah, alamat, serta tujuan tautan menggunakan sumber website yang sama. Naskah hero dan teks penghubung adalah usulan editorial baru.
+
+Profil TK, SD, SMP, dan SMK kini tersedia lokal. Profil TK/SD/SMK memakai teks halaman profil sumber; profil SMP disusun dari artikel field study, LDKS, dan TKA di website utama. Sumber dan foto dicatat di `PROFILE-SOURCES.md`. Berita dari tiap profil membuka detail artikel lokal di beranda. Formulir SPMB tetap menuju Google Form asli. Pijar, layanan surat, Forsaken Cup, Maps, dan Instagram tetap menggunakan tautan yang sudah ada. Tidak ada pengiriman formulir atau perubahan ke layanan tersebut.
+
+Catatan sumber: profil teks SMK menjelaskan TKJ, Manajemen Perkantoran, dan Teknik Otomotif. Banner lama memuat tambahan Multimedia dan Tata Boga. Prototipe memakai penjelasan profil teks; daftar jurusan resmi perlu ditetapkan sebelum publikasi. Tautan lokasi SD di website lama sama dengan tautan lokasi TK; prototipe mempertahankannya dan menampilkan empat alamat langsung pada bagian lokasi.
+
+## Batas prototipe
+
+Ini prototipe lokal untuk menilai arah desain, bukan migrasi WordPress/CMS yang sudah siap menggantikan website aktif. Artikel adalah snapshot, belum tersinkron otomatis. Empat profil sekolah sudah tersedia; galeri TK memakai enam foto dari halaman profil asal, sedangkan jenjang lain menggunakan foto artikel. Halaman arsip terpisah, redirect URL lama, serta SEO per artikel belum dimigrasikan. Counter pengunjung lama dan widget speed test tidak dibawa karena bukan informasi sekolah.
+
+Pemeriksaan otomatis mencakup integritas konten/aset, filter, pencarian, detail, menu, HTTP lokal, geometri 3D, batas model, pilihan zona, putar, mode cahaya, reset, perubahan ukuran, putaran yang tetap berjalan saat disentuh, dan fallback statis. Controller 3D diuji dengan geometri Three.js asli dan renderer dalam memori. Render GPU dan layout browser desktop/mobile belum diuji karena browser visual tidak tersedia dalam sesi pengerjaan.
