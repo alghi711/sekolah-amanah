@@ -89,11 +89,6 @@ document.querySelectorAll('.filter').forEach(button=>button.addEventListener('cl
   document.querySelectorAll('.filter').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',String(active));});
   renderNews();
 }));
-document.querySelectorAll('[data-news-category]').forEach(link=>link.addEventListener('click',()=>{
-  category=link.dataset.newsCategory;visible=6;search.value='';
-  document.querySelectorAll('.filter').forEach(button=>{const active=button.dataset.filter===category;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
-  renderNews();
-}));
 search.addEventListener('input',()=>{visible=6;renderNews();});
 loadMore.addEventListener('click',()=>{const previous=grid.children.length;visible+=6;renderNews();grid.children[previous]?.querySelector('button')?.focus();});
 const menuButton=document.querySelector('.menu-toggle');

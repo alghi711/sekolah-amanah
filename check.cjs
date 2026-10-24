@@ -47,8 +47,7 @@ const selectors={};
 for(const key of ['#news-grid','#load-more','#news-status','#news-search','#content-dialog','#dialog-body','.dialog-close','.menu-toggle','#navigation','#partners','#partners-toggle'])selectors[key]=new Node();
 const filters=['all','prestasi','kegiatan'].map(filter=>{const n=new Node('button');n.dataset.filter=filter;return n;});
 selectors['#navigation'].append(new Node('a'));
-const prestigeLink=new Node('a');prestigeLink.dataset.newsCategory='prestasi';
-document={body:new Node('body'),activeElement:new Node(),createElement:tag=>new Node(tag),querySelector:key=>selectors[key],querySelectorAll:key=>key==='.filter'?filters:key==='[data-news-category]'?[prestigeLink]:[],addEventListener(){}};
+document={body:new Node('body'),activeElement:new Node(),createElement:tag=>new Node(tag),querySelector:key=>selectors[key],querySelectorAll:key=>key==='.filter'?filters:[],addEventListener(){}};
 const context=vm.createContext({window:{location:{search:''}},document,Intl,Date,console,URLSearchParams});
 vm.runInContext(read('content.js'),context);
 const data=context.window.AMANAH_CONTENT;
@@ -76,7 +75,6 @@ assert.deepEqual(originalPartners.children.map(img=>img.src),duplicatePartners.c
 assert(duplicatePartners.children.every(img=>img.alt===''),'Duplicate logos are decorative');
 selectors['#partners-toggle'].emit('click');assert(selectors['#partners'].classList.contains('is-paused'));assert.equal(selectors['#partners-toggle'].getAttribute('aria-pressed'),'true');
 selectors['#partners-toggle'].emit('click');assert(!selectors['#partners'].classList.contains('is-paused'));assert.equal(selectors['#partners-toggle'].getAttribute('aria-pressed'),'false');
-prestigeLink.emit('click');assert.equal(selectors['#news-search'].value,'');assert(grid.children.every(n=>n.children[0].children[1].textContent==='PRESTASI'));
 const linkedContext=vm.createContext({window:{AMANAH_CONTENT:data,location:{search:'?berita=1028'}},document,Intl,Date,console,URLSearchParams});
 vm.runInContext(read('app.js'),linkedContext);assert(selectors['#content-dialog'].open);assert(selectors['#dialog-body'].children.some(node=>node.textContent===context.readableTitle(data.posts.find(post=>post.id===1028).title)));selectors['#content-dialog'].close();
 const invalidContext=vm.createContext({window:{AMANAH_CONTENT:data,location:{search:'?berita=unknown'}},document,Intl,Date,console,URLSearchParams});
@@ -155,7 +153,7 @@ for(const claim of ['EST. 2012','Pendidikan Islam Raya','Bina Insan Mandiri','AR
 console.log(`PASS: 3D geometry, five selectable zones, model bounds, ${meshes} meshes and original school content.`);
 // Exercise the actual scene controller with real geometry and an in-memory renderer.
 const sceneNodes={};
-for(const key of ['#campus-stage','#campus-fallback','#campus-left','#campus-auto','#campus-time','#campus-reset','#zone-badge','#zone-title','#zone-description','#campus-caption'])sceneNodes[key]=new Node();
+for(const key of ['#campus-stage','#campus-fallback','#campus-left','#campus-auto','#campus-time','#campus-reset','#zone-badge','#zone-title','#zone-description'])sceneNodes[key]=new Node();
 const stage=sceneNodes['#campus-stage'];stage.clientWidth=640;stage.clientHeight=520;
 const introTitle=html.match(/id="zone-title">([^<]+)</)[1];
 sceneNodes['#zone-title'].textContent=introTitle;

@@ -141,7 +141,7 @@
     if(model){model.setTheme(key,reduced.matches||motionPaused);model.marker.visible=key!=='all';model.marker.position.set(zone.point[0],.9,zone.point[1]);if(reduced.matches||motionPaused)model.group.rotation.y=rotation;}
   }
   window.AmanahCampus.focusZone=focusZone;
-  function staticMode(){fallback.hidden=false;controls.left.disabled=true;controls.auto.disabled=true;controls.time.disabled=true;controls.reset.disabled=true;document.querySelector('#campus-caption').textContent='ILUSTRASI STATIS • PILIH JENJANG UNTUK MENGENAL AMANAH';}
+  function staticMode(){fallback.hidden=false;controls.left.disabled=true;controls.auto.disabled=true;controls.time.disabled=true;controls.reset.disabled=true;}
   if(!T){staticMode();return;}
   try{
     renderer=new T.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});

@@ -106,7 +106,7 @@ footer.wrap{max-width:none;width:100%;padding:55px max(32px,calc((100vw - 1280px
 }
 
 /* Give the illustration its own row so information never covers the model. */
-.campus{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"stage" "controls" "info" "caption";height:auto;gap:18px}
+.campus{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"stage" "controls" "info";height:auto;gap:18px}
 .campus-sky{pointer-events:none}
 .campus-stage{grid-area:stage;position:relative;inset:auto;width:100%;height:440px;order:0}
 .campus-controls{grid-area:controls;position:relative;inset:auto;transform:none;justify-self:center;align-self:start;order:0}
