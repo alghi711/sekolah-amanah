@@ -9,7 +9,7 @@ const html=read('index.html');
 const css=read('styles.css');
 const referenceCss=read('pixel-reference.css');
 for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){
-  if(!/^https?:/.test(match[1]))assert(fs.existsSync(path.join(root,match[1])),`Missing asset ${match[1]}`);
+  if(!/^https?:/.test(match[1]))assert(fs.existsSync(path.join(root,match[1].split(/[?#]/)[0])),`Missing asset ${match[1]}`);
 }
 for(const match of html.matchAll(/href="#([^"]+)"/g))assert(html.includes(`id="${match[1]}"`),`Missing anchor ${match[1]}`);
 const levelNavigation=html.match(/<nav class="zone-pills"[\s\S]*?<\/nav>/)[0];

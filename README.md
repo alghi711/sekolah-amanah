@@ -22,7 +22,7 @@ Website Sekolah Amanah untuk jenjang KB/RA–TK, SD, SMP, dan SMK, dengan ilustr
 - Banner penerimaan murid baru 2027 yang langsung menuju formulir pendaftaran.
 - Berita kegiatan dan prestasi dengan pencarian, filter, dan detail artikel.
 - Peta sekolah serta tautan Instagram SD, SMP, dan SMK.
-- Akses cepat Pijar Sekolah dan layanan surat SMK Amanah.
+- Akses cepat E-Learning dan layanan surat SMK Amanah.
 - Tampilan responsif, navigasi keyboard, serta dukungan reduced motion.
 
 ## Teknologi
