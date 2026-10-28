@@ -76,9 +76,6 @@ function openArticle(post) {
       dialogBody.append(element(block.type==='p'?'p':'h3','',block.text));
     }
   });
-  const actions=element('div','dialog-actions');
-  actions.append(externalLink('Baca di website Amanah ↗',post.url));
-  dialogBody.append(actions);
   showDialog();
 }
 document.querySelector('.dialog-close').addEventListener('click',()=>dialog.close());
