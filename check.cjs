@@ -45,15 +45,15 @@ class Node {
 }
 const selectors={};
 for(const key of ['#news-grid','#load-more','#news-status','#news-search','#content-dialog','#dialog-body','.dialog-close','.menu-toggle','#navigation','#partners','#partners-toggle'])selectors[key]=new Node();
-const filters=['all','prestasi','kegiatan'].map(filter=>{const n=new Node('button');n.dataset.filter=filter;return n;});
+const filters=['all','prestasi','kegiatan','artikel'].map(filter=>{const n=new Node('button');n.dataset.filter=filter;return n;});
 selectors['#navigation'].append(new Node('a'));
 document={body:new Node('body'),activeElement:new Node(),createElement:tag=>new Node(tag),querySelector:key=>selectors[key],querySelectorAll:key=>key==='.filter'?filters:[],addEventListener(){}};
 const context=vm.createContext({window:{location:{search:''}},document,Intl,Date,console,URLSearchParams});
 vm.runInContext(read('content.js'),context);
 const data=context.window.AMANAH_CONTENT;
-assert.equal(data.posts.length,29);assert.equal(data.profiles.length,3);assert.equal(data.partners.length,17);
+assert.equal(data.posts.length,30);assert.equal(data.profiles.length,3);assert.equal(data.partners.length,17);
 assert(data.posts.some(p=>p.blocks.some(b=>b.type==='li')),'Article list content must be retained');
-for(const post of data.posts){assert(post.title&&post.blocks.length&&/^https:\/\/sekolahamanah.sch.id\//.test(post.url));assert(fs.existsSync(path.join(root,post.image)));}
+for(const post of data.posts){assert(post.title&&post.blocks.length&&/^https:\/\/(?:sekolahamanah\.sch\.id|sekolah-amanah\.wasmer\.app)\//.test(post.url));assert(fs.existsSync(path.join(root,post.image)));}
 for(const source of data.partners)assert(fs.existsSync(path.join(root,source)));
 assert(!read('content.js').includes('â€™'),'Content encoding damaged');
 vm.runInContext(read('app.js'),context);
@@ -79,6 +79,11 @@ const linkedContext=vm.createContext({window:{AMANAH_CONTENT:data,location:{sear
 vm.runInContext(read('app.js'),linkedContext);assert(selectors['#content-dialog'].open);assert(selectors['#dialog-body'].children.some(node=>node.textContent===context.readableTitle(data.posts.find(post=>post.id===1028).title)));selectors['#content-dialog'].close();
 const invalidContext=vm.createContext({window:{AMANAH_CONTENT:data,location:{search:'?berita=unknown'}},document,Intl,Date,console,URLSearchParams});
 vm.runInContext(read('app.js'),invalidContext);assert(!selectors['#content-dialog'].open,'Unknown story IDs leave the news page usable');
+const articleFixture={...data.posts[0],id:987654321,title:'Artikel literasi untuk keluarga Amanah',category:'artikel'};
+data.posts.unshift(articleFixture);selectors['#news-search'].value='';filters[3].emit('click');
+assert.equal(grid.children.length,1);assert.equal(grid.children[0].children[0].children[1].textContent,'ARTIKEL');
+grid.children[0].querySelector('button').emit('click');assert(selectors['#dialog-body'].children.some(node=>node.textContent===articleFixture.title));
+selectors['#content-dialog'].close();data.posts.shift();filters[0].emit('click');
 console.log('PASS: content, local assets, navigation anchors, filters, search, pagination, article deep links, focus restoration and menu state.');
 {
   const profileCss=read('profiles.css');assert.equal((profileCss.match(/{/g)||[]).length,(profileCss.match(/}/g)||[]).length);

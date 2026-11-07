@@ -321,6 +321,7 @@ footer.wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 #kabar .section-heading .eyebrow{font:700 12px/1.6 var(--mono);letter-spacing:.6px;padding:7px 11px}
 #kabar .section-heading>p{font-size:15px;line-height:1.85;color:#4d6656}
 #kabar .filter{font:700 14px/1.5 var(--body);min-height:44px;padding:10px 15px}
+#kabar .filters{flex-wrap:wrap}
 #kabar .search{width:270px;min-height:46px}
 #kabar .search input{font-size:14px;line-height:1.5;padding-block:10px}
 #kabar .search input::placeholder{color:#67776b;opacity:1}
@@ -328,7 +329,12 @@ footer.wrap{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 #kabar .news-meta{font:500 12px/1.6 var(--body);flex-wrap:wrap;gap:6px 12px}
 #kabar .news-card h3{font-size:20px;line-height:1.55}
 #kabar .news-card button{font:700 13px/1.6 var(--body);min-height:40px}
+#kabar .news-card{position:relative}
+#kabar .news-card button::after{content:"";position:absolute;inset:0;z-index:1;cursor:pointer}
+#kabar .news-card button:focus-visible{outline:none}
+#kabar .news-card button:focus-visible::after{outline:3px solid var(--ink);outline-offset:5px}
 #kabar .news-more .button{font-size:14px}
+footer .footer-admin{display:inline-flex;align-items:center;min-height:44px;font-size:12px;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:800px){#kabar .news-toolbar{align-items:stretch;flex-direction:column;gap:20px}#kabar .search{width:100%;max-width:400px}#kabar .section-heading>p{font-size:14px}}
 @media(max-width:560px){#kabar .section-heading .eyebrow{font-size:11px}#kabar .section-heading h2{font-size:31px;line-height:1.2}#kabar .filter{font-size:13px;padding:10px 12px}#kabar .filters{gap:9px}#kabar .search{max-width:none}#kabar .news-card h3{font-size:19px}}
 

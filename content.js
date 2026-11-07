@@ -3,6 +3,33 @@ window.AMANAH_CONTENT = {
     "imported":  "2026-10-24",
     "posts":  [
                   {
+                      "id":  20261101,
+                      "date":  "2026-11-01T00:00:00",
+                      "url":  "https://sekolahamanah.sch.id/?berita=20261101#kabar",
+                      "school":  "SMK AMANAH",
+                      "title":  "SMK Amanah Berjaya! Juara 1 FIN SUPER LEAGUE 2026 Se-Provinsi Banten",
+                      "category":  "prestasi",
+                      "image":  "assets/news-20261101-fin-super-league.jpeg",
+                      "blocks":  [
+                                     {
+                                         "type":  "p",
+                                         "text":  "TANGERANG — Tim futsal SMK Amanah berhasil mengukir prestasi gemilang dengan merengkuh gelar Juara 1 dalam ajang bergengsi FIN SUPER LEAGUE 2026. Turnamen yang mempertemukan tim-tim futsal sekolah terbaik se-Provinsi Banten ini diselenggarakan selama dua hari, yakni pada 31 Oktober hingga 1 November 2026, bertempat di GOR Nambo Jaya, Karawaci, Kota Tangerang."
+                                     },
+                                     {
+                                         "type":  "p",
+                                         "text":  "Puncak acara terjadi pada partai final yang mempertemukan SMK Amanah dengan SMAN 14 Kota Tangerang. Dalam laga pamungkas tersebut, skuad SMK Amanah tampil solid dan mendominasi jalannya pertandingan. Mereka berhasil menyudahi perlawanan SMAN 14 Kota Tangerang dengan skor meyakinkan 2-0. Kemenangan tanpa kebobolan ini mengukuhkan taktik dan pertahanan kuat yang dibangun oleh tim SMK Amanah di atas lapangan."
+                                     },
+                                     {
+                                         "type":  "p",
+                                         "text":  "Kebahagiaan SMK Amanah semakin sempurna berkat torehan prestasi individu yang diraih oleh punggawa andalan mereka. Ahmad Rasyandi secara resmi dinobatkan sebagai Pemain Terbaik (Best Player) dalam turnamen FIN SUPER LEAGUE edisi kali ini. Pergerakan yang lincah, visi bermain yang cerdas, serta kontribusi besarnya dalam setiap laga dinilai menjadi kunci utama kesuksesan SMK Amanah melaju hingga menjadi kampiun."
+                                     },
+                                     {
+                                         "type":  "p",
+                                         "text":  "Kemenangan ini disambut sorak-sorai para pendukung yang memadati GOR Nambo Jaya. Trofi FIN SUPER LEAGUE 2026 yang dibawa pulang ke sekolah diharapkan dapat menjadi pemacu semangat bagi seluruh siswa SMK Amanah untuk terus melahirkan prestasi-prestasi membanggakan di masa depan, baik di bidang olahraga maupun akademik."
+                                     }
+                                 ]
+                  },
+                  {
                       "id":  1191,
                       "date":  "2026-10-17T07:52:00",
                       "url":  "https://sekolahamanah.sch.id/smk-amanah-4/",

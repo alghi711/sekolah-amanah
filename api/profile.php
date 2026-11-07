@@ -21,12 +21,12 @@ try {
         $url = 'index.html?berita=' . $post['id'] . '#kabar';
         $title = $escape($post['title']);
         $photo = $post['image'] === '' ? '' : '<a href="' . $escape($url) . '" class="profile-news-photo" tabindex="-1" aria-hidden="true"><img src="' . $escape($post['image']) . '" alt="" width="768" height="465" loading="lazy"></a>';
-        $cards .= '<article class="profile-news-card">' . $photo . '<div class="profile-news-copy"><div class="profile-news-meta"><span>' . ($post['category'] === 'prestasi' ? 'PRESTASI' : 'KEGIATAN') . '</span><time datetime="' . $escape($post['date']) . '">' . $escape(substr($post['date'], 0, 10)) . '</time></div><h3><a href="' . $escape($url) . '">' . $title . '</a></h3><a class="profile-text-link" href="' . $escape($url) . '" aria-label="Baca ' . $title . '">Baca berita <span aria-hidden="true">↗</span></a></div></article>';
+        $cards .= '<article class="profile-news-card">' . $photo . '<div class="profile-news-copy"><div class="profile-news-meta"><span>' . amanah_category_label($post['category']) . '</span><time datetime="' . $escape($post['date']) . '">' . $escape(substr($post['date'], 0, 10)) . '</time></div><h3><a href="' . $escape($url) . '">' . $title . '</a></h3><a class="profile-text-link" href="' . $escape($url) . '" aria-label="Baca ' . $title . '">Baca berita <span aria-hidden="true">↗</span></a></div></article>';
     }
     if (!$posts) { $cards = '<p>Belum ada berita untuk jenjang ini.</p>'; }
     $grid = '<div class="profile-news-grid' . (count($posts) === 1 ? ' single-story' : '') . '">' . $cards . '</div></section>';
     $html = preg_replace_callback('/<div class="profile-news-grid[^\"]*">[\s\S]*?<\/div><\/section>/', static fn() => $grid, $html, 1);
-    header('X-Amanah-Data: mysql');
+    header('X-Amanah-Data: ' . amanah_content_source());
 } catch (Throwable $error) {
     amanah_log_database_error($error);
     header('X-Amanah-Data: fallback');

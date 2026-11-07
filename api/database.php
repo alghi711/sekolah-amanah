@@ -1,5 +1,6 @@
 <?php
 if (!defined('AMANAH_API')) { http_response_code(404); exit; }
+require_once __DIR__ . '/storage.php';
 
 function amanah_database(): PDO {
     $file = getenv('AMANAH_DB_CONFIG') ?: dirname(__DIR__, 2) . '/amanah-private/database.php';
@@ -42,7 +43,7 @@ function amanah_read_content(PDO $db): array {
     $content['posts'] = array();
     foreach ($db->query('SELECT id, post_date, title, school, category, url, image, blocks FROM amanah_posts ORDER BY post_date DESC, id DESC')->fetchAll() as $row) {
         $blocks = json_decode($row['blocks'], true, 512, JSON_THROW_ON_ERROR);
-        if (!is_array($blocks) || !in_array($row['category'], array('prestasi', 'kegiatan'), true)) { throw new UnexpectedValueException('Invalid article.'); }
+        if (!is_array($blocks) || !in_array($row['category'], array('prestasi', 'kegiatan', 'artikel'), true)) { throw new UnexpectedValueException('Invalid article.'); }
         foreach ($blocks as $block) {
             if (!is_array($block) || !isset($block['type'], $block['text']) || !is_string($block['text']) || !in_array($block['type'], array('p', 'li', 'h2', 'h3'), true)) { throw new UnexpectedValueException('Invalid article block.'); }
         }
@@ -55,7 +56,12 @@ function amanah_read_content(PDO $db): array {
     return $content;
 }
 
-function amanah_content(): array { return amanah_read_content(amanah_database()); }
+function amanah_content(): array {
+    if (is_file(amanah_content_file())) { return amanah_read_file_content(); }
+    return amanah_read_content(amanah_database());
+}
+
+function amanah_content_source(): string { return is_file(amanah_content_file()) ? 'file' : 'mysql'; }
 
 function amanah_log_database_error(Throwable $error): void {
     // Keep credentials, SQL statements and server addresses out of public responses and logs.

@@ -21,6 +21,7 @@ Website Sekolah Amanah untuk jenjang KB/RA–TK, SD, SMP, dan SMK, dengan ilustr
 - Empat profil sekolah dengan program belajar, dokumentasi kegiatan, dan lokasi cabang.
 - Banner penerimaan murid baru 2027 yang langsung menuju formulir pendaftaran.
 - Berita kegiatan dan prestasi dengan pencarian, filter, dan detail artikel.
+- Panel admin Hostinger untuk login, menulis berita/artikel, dan mengunggah foto langsung dari browser.
 - Peta sekolah serta tautan Instagram SD, SMP, dan SMK.
 - Akses cepat E-Learning dan layanan surat SMK Amanah.
 - Tampilan responsif, navigasi keyboard, serta dukungan reduced motion.
@@ -34,6 +35,8 @@ HTML, CSS, JavaScript, dan Three.js r128. Hosting menggunakan Wasmer Edge dengan
 ## PHP + MySQL untuk Hostinger
 
 Website pixel juga menyediakan paket Hostinger dengan PHP 8.0+ dan PDO MySQL. Berita, kartu berita tiap jenjang, dan partner dibaca dari database tanpa mengubah desain. Mode statis Wasmer tetap memakai file lokal.
+
+Panel `/admin/` memakai sesi PHP dan penyimpanan JSON di `amanah-private/content.json`, di luar `public_html`. Ketika penyimpanan privat ini terpasang, berita beranda dan profil membaca data tersebut. Tidak diperlukan koneksi MySQL untuk menerbitkan dari admin. Akun disimpan sebagai hash dalam konfigurasi privat; password tidak ditanamkan ke JavaScript atau repository. Pemasangan dan pencadangan dijelaskan pada [panduan admin](admin/README.md).
 
 ```sh
 node mysql/build.cjs
@@ -73,6 +76,8 @@ npm test
 Setelah mengubah data atau template profil, jalankan `node make-profiles.cjs` untuk menghasilkan ulang empat halaman profil.
 
 Konten berita merupakan snapshot; pembaruan dari website sumber tidak berjalan otomatis. `import-content.ps1` digunakan untuk mengambil ulang konten dan menimpa snapshot beserta aset terkait.
+
+Setelah admin aktif, perubahan berita live dilakukan dari `/admin/`. Jangan menimpa `amanah-private/content.json` dengan snapshot build karena berkas itu menyimpan tulisan terbaru dari admin. Unduh cadangan konten privat beserta `assets/uploads/` sebelum pemindahan hosting.
 
 ## Deploy ke Wasmer
 

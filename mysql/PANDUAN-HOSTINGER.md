@@ -5,10 +5,16 @@ Paket ini untuk **website pixel asli, bukan tema WordPress**. Tampilan HTML, CSS
 ## Isi paket
 
 - `public_html/`: website dan endpoint PHP, termasuk `.htaccess`.
-- `mysql/amanah.sql`: skema dan data awal 29 berita serta pengaturan partner/aset/konten.
+- `mysql/amanah.sql`: skema dan data awal 30 berita serta pengaturan partner/aset/konten.
 - `amanah-private/database.example.php`: contoh konfigurasi, tanpa kredensial asli.
+- `public_html/admin/`: panel login serta penerbitan berita/artikel dan foto.
+- `amanah-private/content.initial.json` dan `admin-config.example.php`: data awal serta contoh konfigurasi admin, bukan file aktif yang boleh menimpa instalasi lama.
 
-## Pemasangan
+## Admin tanpa MySQL
+
+Panel admin dapat langsung memakai penyimpanan JSON privat. Ikuti [panduan admin](../admin/README.md): letakkan `content.json` dan `admin-config.php` di luar `public_html`, aktifkan ekstensi PHP/izin tulis, dan verifikasi header `X-Amanah-Data: file`. Penyimpanan privat mempunyai prioritas atas MySQL. Password asli tidak disertakan dalam paket.
+
+## Pemasangan MySQL (opsional)
 
 1. Buat backup file dan database website lama. Uji paket ini di staging atau subdomain dahulu. Jangan menimpa `public_html` WordPress yang sedang aktif sebelum siap menggantinya.
 2. Di hPanel Hostinger buka **Database → Management/Pengelolaan**, lalu buat database MySQL dan pengguna khusus website pixel. Catat nama lengkap database dan pengguna, termasuk awalan akun Hostinger.
@@ -30,7 +36,7 @@ Paket ini untuk **website pixel asli, bukan tema WordPress**. Tampilan HTML, CSS
        assets/
    ```
 
-8. Pastikan PHP 8.0+ dan ekstensi `pdo_mysql` aktif. Buka `https://DOMAIN/api/content.php`. Koneksi benar jika status HTTP 200 dan muncul data JSON dengan 29 berita. Header respons `X-Amanah-Data: mysql` menandakan data berasal dari MySQL.
+8. Pastikan PHP 8.0+ dan ekstensi `pdo_mysql` aktif. Buka `https://DOMAIN/api/content.php`. Koneksi benar jika status HTTP 200 dan muncul data JSON dengan 30 berita. Header respons `X-Amanah-Data: mysql` menandakan data berasal dari MySQL.
 9. Periksa beranda dan empat profil. `.htaccess` mengarahkan `content.js` serta halaman profil ke PHP, tanpa mengubah tautan atau desain. Bersihkan cache hosting setelah pemasangan dan kecualikan `content.js`, `api/`, serta halaman profil dari cache statis/CDN yang mengabaikan `Cache-Control: no-store`.
 
 ## Apa yang memakai MySQL
@@ -38,7 +44,7 @@ Paket ini untuk **website pixel asli, bukan tema WordPress**. Tampilan HTML, CSS
 - `amanah_posts`: berita, tanggal, jenjang, kategori, gambar dan blok isi artikel.
 - `amanah_settings`: data partner, referensi aset dan metadata/salinan narasi profil dari snapshot konten.
 - Beranda membaca berita dan partner dari database. Kartu berita pada profil TK/SD/SMP/SMK juga membaca database, dan membuka berita melalui dialog beranda yang sama.
-- Layout, teks program, banner, alamat, dan narasi profil yang sudah ada tetap berada di HTML; memasang database tidak mengubahnya. Belum ada dashboard edit khusus. Pengelolaan data database dilakukan lewat phpMyAdmin.
+- Layout, teks program, banner, alamat, dan narasi profil yang sudah ada tetap berada di HTML. Panel `/admin/` menerbitkan ke penyimpanan JSON privat; jalur MySQL terpisah ini dikelola melalui phpMyAdmin dan digunakan bila `content.json` privat tidak terpasang.
 - Formulir pendaftaran tetap Google Forms. Jawaban pendaftaran tidak disalin ke database ini.
 
 ## Saat database belum tersambung

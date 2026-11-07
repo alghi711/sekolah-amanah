@@ -20,6 +20,9 @@ function readableTitle(title) {
   if(title !== title.toUpperCase()) return title;
   return title.charAt(0) + title.slice(1).toLowerCase().replace(/\b(smk|smp|sd|tk|tka|asts|ldks|akm|bsi|bnn|tkj)\b/g, value => value.toUpperCase());
 }
+function categoryLabel(value) {
+  return {prestasi:'PRESTASI',kegiatan:'KEGIATAN',artikel:'ARTIKEL'}[value] || 'KEGIATAN';
+}
 function externalLink(label, href, className='text-link') {
   const a = element('a',className,label);
   a.href=href; a.target='_blank'; a.rel='noopener noreferrer';
@@ -40,7 +43,7 @@ function renderNews() {
       img.src=post.image; img.alt=readableTitle(post.title); img.loading='lazy'; img.width=768; img.height=465;
       picture.append(img);
     }
-    picture.append(element('span','news-category',post.category === 'prestasi' ? 'PRESTASI' : 'KEGIATAN'));
+    picture.append(element('span','news-category',categoryLabel(post.category)));
     const meta=element('div','news-meta');
     const time=element('time','',dateFormat.format(new Date(post.date)));time.dateTime=post.date;
     meta.append(element('span','',post.school),time);
